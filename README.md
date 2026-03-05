@@ -1,0 +1,57 @@
+# Bug Hunters
+
+Adversarial bug finding skill for [Claude Code](https://claude.com/claude-code). Uses 3 isolated AI agents to find and verify real bugs with high fidelity.
+
+## How it works
+
+Inspired by [@systematicls's article](https://x.com/systematicls) on exploiting LLM sycophancy for better code review:
+
+1. **Hunter** - Scans your code and reports every possible bug (biased to over-report)
+2. **Skeptic** - Tries to disprove each bug (biased to dismiss false positives)
+3. **Referee** - Reads the code independently and makes final verdicts
+
+Each agent runs in a **completely isolated context** — they can't see each other's reasoning, only structured findings. This prevents anchoring bias and produces high-fidelity results.
+
+## Install
+
+```bash
+git clone https://github.com/danpeguine/bug-hunters.git ~/.claude/skills/bug-hunters
+```
+
+Claude Code auto-discovers skills in `~/.claude/skills/`.
+
+## Usage
+
+```
+/bug-hunt              # Scan entire project
+/bug-hunt src/         # Scan specific directory
+/bug-hunt lib/auth.ts  # Scan specific file
+```
+
+## Update
+
+```bash
+cd ~/.claude/skills/bug-hunters && git pull
+```
+
+## Uninstall
+
+```bash
+rm -rf ~/.claude/skills/bug-hunters
+```
+
+## How the scoring works
+
+The scoring incentives are load-bearing — they exploit each agent's desire to maximize its score:
+
+- **Hunter**: +1/+5/+10 for low/medium/critical bugs. Motivates thoroughness.
+- **Skeptic**: Earns points for disproving false positives, but pays **2x penalty** for wrongly dismissing real bugs. Creates calibrated caution.
+- **Referee**: Symmetric +1/-1 scoring with "ground truth" framing. Makes it precise rather than biased.
+
+## Attribution
+
+Based on the adversarial bug hunting technique described by [@systematicls](https://x.com/systematicls) in "How To Be A World-Class Agentic Engineer."
+
+## License
+
+MIT
