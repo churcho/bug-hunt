@@ -1,4 +1,6 @@
-# Bug Hunt
+<img width="1280" height="480" alt="image" src="https://github.com/user-attachments/assets/8432d699-b4bb-4049-afcc-d2430ac1b58e" />
+
+# /bug-hunt
 
 Adversarial bug finding skill for [Claude Code](https://claude.com/claude-code). Uses 3 isolated AI agents to find and verify real bugs with high fidelity.
 
